@@ -88,4 +88,34 @@ public class ClienteController : BaseApiController
         await _unitOfWork.SaveAsync();
         return NoContent();
     }
+    [HttpGet("GetClienteRepresentanteVentaNoPagoOficina")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ClientesxRepVentasDto>>> Get3()
+    {
+        var results = await _unitOfWork.Clientes
+                                    .GetClienteRepresentanteVentaNoPagoOficina();
+        return _mapper.Map<List<ClientesxRepVentasDto>>(results);
+    }
+    [HttpGet("GetClientesxPedido")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ClientesxPedidoDto>>> Get4()
+    {
+        var results = await _unitOfWork.Clientes
+                                    .GetClientesxPedido();
+        return _mapper.Map<List<ClientesxPedidoDto>>(results);
+    }
+    [HttpGet("GetClienteRepCiudadOficinas")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ClienteRepCiudadOficinaDto>>> Get5()
+    {
+        var results = await _unitOfWork.Clientes
+                                    .GetClienteRepCiudadOficinas();
+        return _mapper.Map<List<ClienteRepCiudadOficinaDto>>(results);
+    }
 }

@@ -88,4 +88,14 @@ public class EmpleadoController : BaseApiController
         await _unitOfWork.SaveAsync();
         return NoContent();
     }
+    [HttpGet("GetEmpleadosSinClienteSinJefe")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<EmpleadoDto>>> Get3()
+    {
+        var results = await _unitOfWork.Empleados
+                                    .GetEmpleadosSinClienteSinJefe();
+        return _mapper.Map<List<EmpleadoDto>>(results);
+    }
 }

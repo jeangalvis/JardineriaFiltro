@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Views;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -21,5 +22,19 @@ public class PedidoRepository : GenericRepository<Pedido>, IPedido
     public override async Task<IEnumerable<Pedido>> GetAllAsync()
     {
         return await _context.Pedidos.ToListAsync();
+    }
+
+    public async Task<IEnumerable<PedidosNoEntregadosATiempo>> GetNoEntregadosATiempo()
+    {
+        return await _context.Pedidos
+                                    .Where(p => p.FechaEsperada < p.FechaEntrega)
+                                    .Select(p => new PedidosNoEntregadosATiempo
+                                    {
+                                        CodigoPedido = p.CodigoPedido,
+                                        CodigoCliente = p.CodigoCliente,
+                                        FechaEsperada = p.FechaEsperada,
+                                        FechaEntrega = p.FechaEntrega
+                                    })
+                                    .ToListAsync();
     }
 }

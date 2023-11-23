@@ -88,4 +88,15 @@ public class PedidoController : BaseApiController
         await _unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    [HttpGet("GetNoEntregadosATiempo")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PedidosNoEntregadosATiempoDto>>> Get3()
+    {
+        var results = await _unitOfWork.Pedidos
+                                    .GetNoEntregadosATiempo();
+        return _mapper.Map<List<PedidosNoEntregadosATiempoDto>>(results);
+    }
 }

@@ -88,4 +88,46 @@ public class ProductoController : BaseApiController
         await _unitOfWork.SaveAsync();
         return NoContent();
     }
+
+    [HttpGet("GetProductosMasVendidos")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ProductosMasVendidosDto>>> Get3()
+    {
+        var results = await _unitOfWork.Productos
+                                    .GetProductosMasVendidos();
+        return _mapper.Map<List<ProductosMasVendidosDto>>(results);
+    }
+    [HttpGet("GetProductosVentasMas3000")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ProductosVentasMas3000Dto>>> Get4()
+    {
+        var results = await _unitOfWork.Productos
+                                    .GetProductosVentasMas3000();
+        return _mapper.Map<List<ProductosVentasMas3000Dto>>(results);
+    }
+
+    [HttpGet("GetProductoPrecioVentaMasCaro")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<ProductoDto>> Get5()
+    {
+        var results = await _unitOfWork.Productos
+                                    .GetProductoPrecioVentaMasCaro();
+        return _mapper.Map<ProductoDto>(results);
+    }
+    [HttpGet("GetProductosGamaSinPedido")]
+    //[Authorize(Roles = "Administrator,Employee")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ProductoConGamaDto>>> Get6()
+    {
+        var results = await _unitOfWork.Productos
+                                    .GetProductosGamaSinPedido();
+        return _mapper.Map<List<ProductoConGamaDto>>(results);
+    }
 }
